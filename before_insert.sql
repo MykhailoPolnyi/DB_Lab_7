@@ -1,6 +1,6 @@
-----------------
+--------------------------------
 -- pharmacy
-----------------
+--------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_BEFORE_INSERT`;
 
 DELIMITER $$
@@ -15,9 +15,9 @@ BEGIN
 END$$
 
 
-----------------
+--------------------------------
 -- worker
-----------------
+--------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`worker_BEFORE_INSERT`;
 
 CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`worker_BEFORE_INSERT` BEFORE INSERT ON `worker` FOR EACH ROW
@@ -34,9 +34,9 @@ BEGIN
     end if;
 END$$
 
-----------------
+--------------------------------
 -- cure_has_target
-----------------
+--------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`cure_has_target_BEFORE_INSERT`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `cure_has_target_BEFORE_INSERT` BEFORE INSERT ON `cure_has_target` FOR EACH ROW BEGIN
@@ -49,6 +49,26 @@ CREATE DEFINER=`root`@`localhost` TRIGGER `cure_has_target_BEFORE_INSERT` BEFORE
     select `target` into c_target from cure_target where cure_target.`target` = new.`target`;
     if (c_target is null)
         then signal sqlstate "45000" set message_text = 'Cannot insert new value: wrong "target" parameter provided';
+    end if;
+END$$
+
+
+--------------------------------
+-- pharmacy_has_cure
+--------------------------------
+DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT`;
+
+CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT` BEFORE INSERT ON `pharmacy_has_cure` FOR EACH ROW
+BEGIN
+    declare pharmacy_id int;
+    declare cure_id int;
+    select `id` into pharmacy_id from pharmacy where pharmacy.`id` = new.`pharmacy_id`;
+    if (pharmacy_id is null)
+        then signal sqlstate "45000" set message_text = 'Cannot insert new value: wrong "pharmacy_id" parameter provided';
+    end if;
+    select `id` into cure_id from cure where cure.`id` = new.`cure_id`;
+    if (cure_id is null)
+        then signal sqlstate "45000" set message_text = 'Cannot insert new value: wrong "cure_id" parameter provided';
     end if;
 END$$
 
