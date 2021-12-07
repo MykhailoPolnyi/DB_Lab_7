@@ -21,7 +21,7 @@ END$$
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`worker_BEFORE_UPDATE`;
 
-CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`worker_BEFORE_UPDATE` BEFORE UPDATE ON `worker` FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` TRIGGER `pharmacy_BEFORE_UPDATE` BEFORE UPDATE ON `pharmacy` FOR EACH ROW 
 BEGIN
 	declare position_name varchar(50);
 	declare pharmacy_id int;
@@ -54,4 +54,25 @@ BEGIN
 		then signal sqlstate "45000" set message_text = 'Cannot update value: wrong "target" parameter provided';
 	end if;
 END$$
+
+
+--------------------------------
+-- pharmacy_has_cure
+--------------------------------
+DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_has_cure_BEFORE_UPDATE`;
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `pharmacy_BEFORE_UPDATE` BEFORE UPDATE ON `pharmacy` FOR EACH ROW 
+BEGIN
+	declare pharmacy_id int;
+    declare cure_id int;
+    select `id` into pharmacy_id from pharmacy where pharmacy.`id` = new.`pharmacy_id`;
+    if (pharmacy_id is null)
+		then signal sqlstate "45000" set message_text = 'Cannot update value: wrong "pharmacy_id" parameter provided';
+	end if;
+    select `id` into cure_id from cure where cure.`id` = new.`cure_id`;
+    if (cure_id is null)
+		then signal sqlstate "45000" set message_text = 'Cannot update value: wrong "cure_id" parameter provided';
+	end if;
+END$$
+
 DELIMITER ;
