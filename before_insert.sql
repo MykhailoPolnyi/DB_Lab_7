@@ -1,10 +1,11 @@
+DELIMITER $$
+USE `polnyi_7_41`$$
+
 --------------------------------
 -- pharmacy
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_BEFORE_INSERT`;
 
-DELIMITER $$
-USE `polnyi_7_41`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`pharmacy_BEFORE_INSERT` BEFORE INSERT ON `pharmacy` FOR EACH ROW
 BEGIN
     declare street_name varchar(50);
@@ -39,7 +40,8 @@ END$$
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`cure_has_target_BEFORE_INSERT`;
 
-CREATE DEFINER=`root`@`localhost` TRIGGER `cure_has_target_BEFORE_INSERT` BEFORE INSERT ON `cure_has_target` FOR EACH ROW BEGIN
+CREATE DEFINER=`root`@`localhost` TRIGGER `cure_has_target_BEFORE_INSERT` BEFORE INSERT ON `cure_has_target` FOR EACH ROW 
+BEGIN
     declare cure_id int;
     declare c_target varchar(50);
     select `id` into cure_id from cure where cure.`id` = new.`cure_id`;
