@@ -25,16 +25,22 @@ CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`worker_BEFORE_INSERT` B
 BEGIN
     declare position_name varchar(50);
     declare pharmacy_id int;
+
+    if (new.`name` not in ("Василь", "Іван", "Галина", "Олександра"))
+        then signal sqlstate "45000" set message_text = 'Wrong wokrers "name" parameter provided';
+    end if;
+
     select `name` into position_name from position where position.`name` = new.`position`;
     if (position_name is null)
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrong "position" parameter provided';
     end if;
+
     select `id` into pharmacy_id from pharmacy where pharmacy.id = new.`pharmacy_id`;
     if (pharmacy_id is null)
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrond "pharmacy_id" parameter provided';
     end if;
     --------------
-    --Triger task
+    -- Triger task
     --------------
     if (new.`passport_series_num` not rlike "[a-z]{2} [0-9]{6}")
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrong "passport_series_num" parameter provided';

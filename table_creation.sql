@@ -64,7 +64,7 @@ CREATE TABLE `worker` (
   `position` VARCHAR(50) NOT NULL,
   `id_number` VARCHAR(25) NOT NULL,
   `passport_series_num` CHAR(9) NOT NULL,
-  `seniority` DOUBLE ZEROFILL UNSIGNED NOT NULL,
+  `seniority` DOUBLE ZEROFILL UNSIGNED NULL,
   `birth_date` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
