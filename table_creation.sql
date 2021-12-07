@@ -35,9 +35,9 @@ ENGINE = InnoDB;
 CREATE TABLE `cure` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `by_prescription` TINYINT ZEROFILL NOT NULL,
-  `is_drug` TINYINT ZEROFILL NOT NULL,
-  `is_psychotropic` TINYINT ZEROFILL NOT NULL,
+  `by_prescription` TINYINT NOT NULL DEFAULT 0,
+  `is_drug` TINYINT NOT NULL DEFAULT 0,
+  `is_psychotropic` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -64,7 +64,7 @@ CREATE TABLE `worker` (
   `position` VARCHAR(50) NOT NULL,
   `id_number` VARCHAR(25) NOT NULL,
   `passport_series_num` CHAR(9) NOT NULL,
-  `seniority` DOUBLE ZEROFILL UNSIGNED NULL,
+  `seniority` DOUBLE UNSIGNED NULL DEFAULT 0,
   `birth_date` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
