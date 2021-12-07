@@ -6,7 +6,7 @@ USE `polnyi_7_41`$$
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_BEFORE_INSERT`;
 
-CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`pharmacy_BEFORE_INSERT` BEFORE INSERT ON `pharmacy` FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`pharmacy_BEFORE_INSERT` BEFORE INSERT ON `pharmacy` FOR EACH ROW
 BEGIN
     declare street_name varchar(50);
     select `name` into street_name from street where `name` = new.`street`;
@@ -21,7 +21,7 @@ END$$
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`worker_BEFORE_INSERT`;
 
-CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`worker_BEFORE_INSERT` BEFORE INSERT ON `worker` FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`worker_BEFORE_INSERT` BEFORE INSERT ON `worker` FOR EACH ROW
 BEGIN
     declare position_name varchar(50);
     declare pharmacy_id int;
@@ -32,6 +32,12 @@ BEGIN
     select `id` into pharmacy_id from pharmacy where pharmacy.id = new.`pharmacy_id`;
     if (pharmacy_id is null)
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrond "pharmacy_id" parameter provided';
+    end if;
+    --------------
+    --Triger task
+    --------------
+    if (new.`passport_series_num` not rlike "[a-z]{2} [0-9]{6}")
+        then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrong "passport_series_num" parameter provided';
     end if;
 END$$
 
@@ -61,7 +67,7 @@ END$$
 --------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT`;
 
-CREATE DEFINER = CURRENT_USER TRIGGER `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT` BEFORE INSERT ON `pharmacy_has_cure` FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT` BEFORE INSERT ON `pharmacy_has_cure` FOR EACH ROW
 BEGIN
     declare pharmacy_id int;
     declare cure_id int;

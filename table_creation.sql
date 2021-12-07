@@ -63,8 +63,7 @@ CREATE TABLE `worker` (
   `pharmacy_id` INT NOT NULL,
   `position` VARCHAR(50) NOT NULL,
   `id_number` VARCHAR(25) NOT NULL,
-  `passport_series` VARCHAR(25) NOT NULL,
-  `passport_num` VARCHAR(25) NOT NULL,
+  `passport_series_num` CHAR(9) NOT NULL,
   `seniority` DOUBLE ZEROFILL UNSIGNED NOT NULL,
   `birth_date` DATE NOT NULL,
   PRIMARY KEY (`id`))
