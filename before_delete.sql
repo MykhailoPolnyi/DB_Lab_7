@@ -1,9 +1,9 @@
 DELIMITER $$
 USE `polnyi_7_41`$$
 
---------------------------------
+-- ------------------------------
 -- street
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`street_BEFORE_DELETE`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `street_BEFORE_DELETE` BEFORE DELETE ON `street` FOR EACH ROW 
@@ -12,9 +12,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- position
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`position_BEFORE_DELETE`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `position_BEFORE_DELETE` BEFORE DELETE ON `position` FOR EACH ROW 
@@ -27,9 +27,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- cure
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`cure_BEFORE_DELETE`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`cure_BEFORE_DELETE` BEFORE DELETE ON `cure` FOR EACH ROW
@@ -39,9 +39,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- pharmacy
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_BEFORE_DELETE`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`pharmacy_BEFORE_DELETE` BEFORE DELETE ON `pharmacy` FOR EACH ROW
@@ -60,9 +60,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- cure_target
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`cure_target_BEFORE_DELETE`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `cure_target_BEFORE_DELETE` BEFORE DELETE ON `cure_target` FOR EACH ROW 

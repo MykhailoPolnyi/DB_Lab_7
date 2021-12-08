@@ -1,9 +1,9 @@
 DELIMITER $$
 USE `polnyi_7_41`$$
 
---------------------------------
+-- ------------------------------
 -- pharmacy
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_BEFORE_INSERT`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`pharmacy_BEFORE_INSERT` BEFORE INSERT ON `pharmacy` FOR EACH ROW
@@ -16,9 +16,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- worker
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`worker_BEFORE_INSERT`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`worker_BEFORE_INSERT` BEFORE INSERT ON `worker` FOR EACH ROW
@@ -39,18 +39,18 @@ BEGIN
     if (pharmacy_id is null)
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrond "pharmacy_id" parameter provided';
     end if;
-    --------------
+    -- ------------
     -- Triger task
-    --------------
+    -- ------------
     if (new.`passport_series_num` not rlike "[a-z]{2} [0-9]{6}")
         then signal sqlstate '45000' set message_text = 'Cannot insert new value: wrong "passport_series_num" parameter provided';
     end if;
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- cure_has_target
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`cure_has_target_BEFORE_INSERT`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `cure_has_target_BEFORE_INSERT` BEFORE INSERT ON `cure_has_target` FOR EACH ROW 
@@ -68,9 +68,9 @@ BEGIN
 END$$
 
 
---------------------------------
+-- ------------------------------
 -- pharmacy_has_cure
---------------------------------
+-- ------------------------------
 DROP TRIGGER IF EXISTS `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT`;
 
 CREATE DEFINER=`root`@`localhost` TRIGGER `polnyi_7_41`.`pharmacy_has_cure_BEFORE_INSERT` BEFORE INSERT ON `pharmacy_has_cure` FOR EACH ROW

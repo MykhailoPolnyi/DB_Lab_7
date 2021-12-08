@@ -53,7 +53,7 @@ BEGIN
     declare done bool default false;
     declare pharmacy_name varchar(45);
     declare first_value_passed bool default false;
-    declare pharmacy_cursor cursor for select `name` from pharmacy;
+    declare pharmacy_cursor cursor for select distinct `name` from pharmacy;
     declare continue handler for not found set done = TRUE;
     set @create_statement = 'CREATE TABLE `pharmacy_names` ( ';
    
@@ -68,7 +68,7 @@ BEGIN
         if (first_value_passed) 
             then set @create_statement = concat(@create_statement, ",");
         end if;
-        set @create_statement = concat(@create_statement, pharmacy_name, " int");
+        set @create_statement = concat(@create_statement, " `", pharmacy_name, "` int");
         set first_value_passed = true;
     end loop;
     

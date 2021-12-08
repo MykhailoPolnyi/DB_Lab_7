@@ -62,7 +62,7 @@ CREATE TABLE `worker` (
   `middle_name` VARCHAR(50) NOT NULL,
   `pharmacy_id` INT NOT NULL,
   `position` VARCHAR(50) NOT NULL,
-  `id_number` VARCHAR(25) NOT NULL,
+  `id_number` CHAR(10) NOT NULL,
   `passport_series_num` CHAR(9) NOT NULL,
   `seniority` DOUBLE UNSIGNED NULL DEFAULT 0,
   `birth_date` DATE NOT NULL,
